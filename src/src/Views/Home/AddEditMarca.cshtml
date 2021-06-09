@@ -1,0 +1,25 @@
+﻿@model src.Models.Marca
+
+@{ 
+    Layout = null;
+}
+<h4>Marca</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form onsubmit="return SubmitAddEdit(this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="marcaId" />
+            <div class="form-group">
+                <label asp-for="marcaDesc" class="control-label"></label>
+                <input asp-for="marcaDesc" class="form-control" />
+                <span asp-validation-for="marcaDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

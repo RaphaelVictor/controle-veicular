@@ -1,0 +1,157 @@
+﻿@model src.Models.Anuncio
+
+@{
+    Layout = null;
+    if(Model.Modelo == null){
+        Model.Modelo = new Modelo();
+    }
+}
+<h4>Anuncio</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-controller="Anuncio" onsubmit="return SubmitAddEditAnuncio(this)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="anuncioId" />
+            <div class="form-group">
+                <label asp-for="anuncioDesc" class="control-label"></label>
+                <input asp-for="anuncioDesc" class="form-control" />
+                <span asp-validation-for="anuncioDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Modelo.marcaid" class="control-label"></label>
+                <span asp-validation-for="Modelo.marcaid" class="text-danger"></span>
+                <select asp-for="Modelo.marcaid" onchange="FillSelectValuesModelo()" class="form-control" id="dropDownMarca">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="modeloId" class="control-label"></label>
+                <span asp-validation-for="modeloId" class="text-danger"></span>
+                <select asp-for="modeloId" class="form-control" id="dropDownModelo">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ano" class="control-label"></label>
+                <input asp-for="ano" class="form-control" />
+                <span asp-validation-for="ano" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="valorCompra" class="control-label"></label>
+                <input asp-for="valorCompra" asp-is-invariant="true"  class="form-control" />
+                <span asp-validation-for="valorCompra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="valorVenda" class="control-label"></label>
+                <input asp-for="valorVenda" asp-is-invariant="true"  class="form-control"  />
+                <span asp-validation-for="valorVenda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cor" class="control-label"></label>
+                <span asp-validation-for="cor" class="text-danger"></span>
+                <select asp-for="cor" asp-items="Html.GetEnumSelectList<Cor>()" asclass="form-control" id="dropDownCor">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="tipoCombustivel" class="control-label"></label>
+                <span asp-validation-for="tipoCombustivel" class="text-danger"></span>
+                <select asp-for="tipoCombustivel" asp-items="Html.GetEnumSelectList<TipoCombusivel>()" asclass="form-control" id="dropDownCombustivel">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="dataVenda" class="control-label"></label>
+                <input asp-for="dataVenda" class="form-control" />
+                <span asp-validation-for="dataVenda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    FillSelectValuesMarca();
+
+    function FillSelectValuesMarca() {
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '/api/marca/Marcas',
+            contentType: 'application/json',
+            success: function (data) {
+                debugger;
+                $.each(data, function (key, value) {
+                    debugger;
+                    $("<option/>", { value: key, text: value })
+                        .appendTo('#dropDownMarca')
+                });
+                debugger;
+                if (@Model.Modelo.marcaid == 0)
+                    $('[id=dropDownMarca]').val("");
+                else {
+                    $('[id=dropDownMarca]').val(@Model.Modelo.marcaid);
+                    FillSelectValuesModelo();
+                }
+
+            }
+
+        });
+    }
+
+    function FillSelectValuesModelo() {
+        removeOptions(document.getElementById('dropDownModelo'));
+        var select = document.getElementById("dropDownMarca").value
+
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '/api/modelo/Modelo',
+            contentType: 'application/json',
+            data: { "marcaid": select },
+            success: function (data) {
+                $.each(data, function (key, value) {
+                    $("<option/>", { value: key, text: value })
+                        .appendTo('#dropDownModelo')
+                });
+
+                if (@Model.modeloId == 0)
+                    $('[id=dropDownModelo]').val("");
+                else
+                    $('[id=dropDownModelo]').val(@Model.modeloId);
+            }
+
+        });
+    }
+
+    function removeOptions(selectElement) {
+        var i, L = selectElement.options.length - 1;
+        for (i = L; i >= 0; i--) {
+            selectElement.remove(i);
+        }
+    }
+
+    function SubmitAddEditAnuncio(form) {
+        $.validator.unobtrusive.parse(form);
+        if ($(form).valid()) {
+            var data = $(form).serializeJSON();
+            data = JSON.stringify(data);
+            $.ajax({
+                type: 'POST',
+                url: '/api/anuncio',
+                data: data,
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.success) {
+                        popup.dialog('close');
+                        ShowMessage(data.message);
+                        dataTable.ajax.reload();
+                    }
+                }
+            });
+
+        }
+        return false;
+    }
+
+</script>

@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "Modelo";
+}
+
+<h2>Modelo CRUD</h2>
+<div class="row">
+    <div class="col-md-10">
+        <a class="btn btn-success" style="margin-bottom:10px" onclick="ShowPopup('@Url.Action("AddEditModelo","Modelo")')"><i class="fa fa-plus"></i> Adicionar novo Modelo</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <table id="gridModelo" name="gridModelo" class="table table-striped table-bordered" >
+            <thead>
+                <tr>
+                    <th class="col-md-10">Modelo</th>
+                    <th class="col-md-10">Marca</th>
+                    <th class="col-md-2"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts{ 
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/views/home/index.js"></script>
+}
+
