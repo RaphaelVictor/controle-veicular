@@ -51,7 +51,7 @@ namespace src
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Marca/Error");
             }
 
             app.UseStaticFiles();
@@ -61,11 +61,8 @@ namespace src
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "Modelo",
-                    template: "{controller=Modelo}/{action=Modelo}");
-                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Marca}/{id?}");
+                    template: "{controller=Marca}/{action=Marca}/{id?}");
             });
         }
     }

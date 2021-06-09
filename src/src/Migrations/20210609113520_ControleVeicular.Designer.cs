@@ -12,8 +12,8 @@ using System;
 namespace src.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210609022905_Controle")]
-    partial class Controle
+    [Migration("20210609113520_ControleVeicular")]
+    partial class ControleVeicular
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,6 +136,9 @@ namespace src.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("ano");
+
+                    b.Property<string>("anuncioDesc")
+                        .IsRequired();
 
                     b.Property<int>("cor");
 

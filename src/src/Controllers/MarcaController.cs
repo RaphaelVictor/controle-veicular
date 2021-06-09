@@ -9,12 +9,12 @@ using src.Models;
 
 namespace src.Controllers
 {
-    public class HomeController : Controller
+    public class MarcaController : Controller
     {
 
         private readonly ApplicationDbContext _context;
 
-        public HomeController(ApplicationDbContext context)
+        public MarcaController(ApplicationDbContext context)
         {
             _context = context;
         }

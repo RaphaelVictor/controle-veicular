@@ -74,19 +74,19 @@
     FillSelectValuesMarca();
 
     function FillSelectValuesMarca() {
-        debugger;
+        
         $.ajax({
             type: 'GET',
             url: '/api/marca/Marcas',
             contentType: 'application/json',
             success: function (data) {
-                debugger;
+                
                 $.each(data, function (key, value) {
-                    debugger;
+                    
                     $("<option/>", { value: key, text: value })
                         .appendTo('#dropDownMarca')
                 });
-                debugger;
+                
                 if (@Model.Modelo.marcaid == 0)
                     $('[id=dropDownMarca]').val("");
                 else {
@@ -103,7 +103,7 @@
         removeOptions(document.getElementById('dropDownModelo'));
         var select = document.getElementById("dropDownMarca").value
 
-        debugger;
+        
         $.ajax({
             type: 'GET',
             url: '/api/modelo/Modelo',
@@ -129,29 +129,6 @@
         for (i = L; i >= 0; i--) {
             selectElement.remove(i);
         }
-    }
-
-    function SubmitAddEditAnuncio(form) {
-        $.validator.unobtrusive.parse(form);
-        if ($(form).valid()) {
-            var data = $(form).serializeJSON();
-            data = JSON.stringify(data);
-            $.ajax({
-                type: 'POST',
-                url: '/api/anuncio',
-                data: data,
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data.success) {
-                        popup.dialog('close');
-                        ShowMessage(data.message);
-                        dataTable.ajax.reload();
-                    }
-                }
-            });
-
-        }
-        return false;
     }
 
 </script>

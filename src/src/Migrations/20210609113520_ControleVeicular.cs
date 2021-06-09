@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace src.Migrations
 {
-    public partial class Controle : Migration
+    public partial class ControleVeicular : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,6 +194,7 @@ namespace src.Migrations
                     anuncioId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ano = table.Column<int>(nullable: false),
+                    anuncioDesc = table.Column<string>(nullable: false),
                     cor = table.Column<int>(nullable: false),
                     dataVenda = table.Column<DateTime>(nullable: false),
                     modeloId = table.Column<int>(nullable: false),

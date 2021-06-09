@@ -1,13 +1,13 @@
 ﻿@model src.Models.Marca
 
-@{ 
+@{
     Layout = null;
 }
 <h4>Marca</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form onsubmit="return SubmitAddEdit(this)">
+        <form onsubmit="return SubmitAddEditMarca(this)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="marcaId" />
             <div class="form-group">
@@ -21,5 +21,4 @@
         </form>
     </div>
 </div>
-
 
